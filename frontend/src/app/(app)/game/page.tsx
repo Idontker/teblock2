@@ -6,7 +6,6 @@ import GameCanvas from "../../../components/game/GameCanvas";
 import Editor from "../../../components/game/Editor";
 
 export default function ProgrammingGame() {
-  // Initial file contents based on previous code sections
   const rocketCode = `
 class Rocket {
   constructor() {
@@ -24,12 +23,8 @@ class Rocket {
    }
 
   function draw (context) {
-
+    // TODO: insert code
   }
-
-
-
-  
 }
 `;
 
@@ -52,8 +47,11 @@ class Rocket {
     );
   };
 
+  const onCombinedChange = (index: number, combined: string) => {
+    console.log("Combined code for file", index, ":", combined);
+  };
+
   const onClearCode = (index: number) => {
-    // Reset only the 'code.js' file to default; other tabs clear their content.
     if (codeFiles[index].filename === "code.js") {
       onFileChange(
         index,
@@ -80,7 +78,6 @@ class Rocket {
     URL.revokeObjectURL(url);
   };
 
-  // Prepare code for GameCanvas: use individual files
   const prefixCode =
     codeFiles.find((file) => file.filename === "prefix.js")?.content || "";
   const userCode =
@@ -90,15 +87,14 @@ class Rocket {
 
   return (
     <div className="h-screen w-screen flex flex-row ">
-      {/* Updated Editor with multiple tabs */}
       <Editor
         codeFiles={codeFiles}
         onFileChange={onFileChange}
+        onCombinedChange={onCombinedChange}
         onClearCode={onClearCode}
         onCopyCode={onCopyCode}
         onSaveCode={onSaveCode}
       />
-      {/* Canvas Side */}
       <GameCanvas
         userCode={userCode}
         prefixCode={prefixCode}
